@@ -2,7 +2,7 @@ library(shiny)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(theme = "bootstrap.css",
-                  tags$style(HTML(".js-irs-0 .irs-single, .js-irs-0 .irs-bar-edge, .js-irs-0 .irs-bar {background: purple}")),
+
   # Application title
   titlePanel("Torej, koliko bo moja ocena pri predmetu Poslovna informatika?
              Simulacija velja samo za SPROTNO delo!"),
@@ -35,9 +35,6 @@ shinyUI(fluidPage(theme = "bootstrap.css",
     mainPanel(h2("Sumulacija ocene"),
               tableOutput("values"),
               textOutput("ocena")
-      # 
-      # mainPanel(
-      #   tableOutput("values")
       )
     
   )
