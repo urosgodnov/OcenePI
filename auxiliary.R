@@ -33,15 +33,15 @@ ocenatxt<- function(PP,ICTP,EP)
   if (!is.na(val))
   {return(val)}
       
-  val1<-ifelse(gradeDF[gradeDF$Sklop=="Vaje",3]=="Neopravljeno","Ker nimate opravljenih vaj, vas caka daljsi pisni izpit!",NA)
+  val1<-ifelse(gradeDF[gradeDF$Sklop=="Vaje",3]=="Neopravljeno","Ker nimate opravljenih vaj, vas Äaka daljsi pisni izpit!",NA)
   
   if (!is.na(val1))
   {return(val1)}
   
   if(gradeDF[gradeDF$Sklop=="Kolokvija",2]<=30)
-  { val2<-"Zaradi majhnega stevila tock pri kolokviju, vas caka daljsi pisni izpit!"}
+  { val2<-"Zaradi majhnega števila tock pri kolokviju, vas caka daljši pisni izpit!"}
   else if (gradeDF[gradeDF$Sklop=="Kolokvija",2]<=50) {
-    val2<-"Caka vas krajsi pisni izpit!"
+    val2<-"Caka vas krajši pisni izpit!"
   } else {
     
     points<-round(PP*0.5+ICTP*0.2+EP*0.3,0)
@@ -53,7 +53,7 @@ ocenatxt<- function(PP,ICTP,EP)
            ifelse(percentages<85,8,
            ifelse(percentages<93,9,10)))))
     
-    val2<-paste("Skupaj ste dosegli ",as.character(points)," tock, kar znasa ",
+    val2<-paste("Skupaj ste dosegli ",as.character(points)," vseh tock, kar znaša ",
                 as.character(percentages)," odstotkov. Koncna ocena je tako ",
                 as.character(ocena), "!",sep="")
     

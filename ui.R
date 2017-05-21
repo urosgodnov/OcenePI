@@ -4,8 +4,7 @@ library(shiny)
 shinyUI(fluidPage(theme = "bootstrap.css",
 
   # Application title
-  titlePanel("Torej, koliko bo moja ocena pri predmetu Poslovna informatika?
-             Simulacija velja samo za SPROTNO delo!"),
+  titlePanel("Simulacija ocene velja samo za SPROTNO delo v tekočem kvartalu!"),
   
   # Sidebar with a slider input for the number of bins
   sidebarLayout(
