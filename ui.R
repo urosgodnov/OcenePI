@@ -9,7 +9,7 @@ shinyUI(fluidPage(theme = "bootstrap.css",
   # Sidebar with a slider input for the number of bins
   sidebarLayout(
     sidebarPanel(
-      helpText("Z drsnikom nastavite število točk pri posamezni kategoriji!"),
+      helpText("Z drsnikom nastavite število točk v posamezni kategoriji!"),
       
       sliderInput("TV",
                   "Število točk pri vajah",
@@ -31,7 +31,7 @@ shinyUI(fluidPage(theme = "bootstrap.css",
     ),
     
     # Show values
-    mainPanel(h2("Sumulacija ocene"),
+    mainPanel(
               tableOutput("values"),
               textOutput("ocena")
       )
