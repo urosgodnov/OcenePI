@@ -28,12 +28,12 @@ ocenatxt<- function(PP,ICTP,EP)
 {
   gradeDF<-comDF(PP,ICTP,EP)
   
-  val<-ifelse(gradeDF[gradeDF$Sklop=="Informacijska pismenost",3]=="Neopravljeno","Najprej morate opraviti informacijsko pismenost!",NA)
+  val<-ifelse(gradeDF[gradeDF$Sklop=="Informacijska pismenost",3]=="Neopravljeno","C'mon, najprej opravite informacijsko pismenost, potem pa se bomo pogovarjali naprej!",NA)
   
   if (!is.na(val))
   {return(val)}
       
-  val1<-ifelse(gradeDF[gradeDF$Sklop=="Vaje",3]=="Neopravljeno","Ker nimate opravljenih vaj, vas Äaka daljsi pisni izpit!",NA)
+  val1<-ifelse(gradeDF[gradeDF$Sklop=="Vaje",3]=="Neopravljeno","Ker nimate opravljenih vaj, vas caka daljsi pisni izpit!",NA)
   
   if (!is.na(val1))
   {return(val1)}
