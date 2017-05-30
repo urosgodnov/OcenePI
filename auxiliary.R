@@ -1,11 +1,11 @@
 #Grade assesment
 
-comDF <- function(PP,ICTP,EP)
+comDF <- function(PP,ICTP,EP, mTV, mTP, mTK)
 {
   #IzraÄun odstotkov
-  vo<-round(PP/70*100,0)
-  po<-round(ICTP/20*100,0)
-  ko<-round(EP/42*100,0)
+  vo<-round(PP/mTV*100,0)
+  po<-round(ICTP/mTP*100,0)
+  ko<-round(EP/mTK*100,0)
   
   #Opravljeno/neopravljeno
   opv<-ifelse(vo>=50,"Opravljeno","Neopravljeno")
@@ -24,9 +24,9 @@ comDF <- function(PP,ICTP,EP)
   
 }
 
-ocenatxt<- function(PP,ICTP,EP)
+ocenatxt<- function(PP,ICTP,EP,mTV, mTP, mTK)
 {
-  gradeDF<-comDF(PP,ICTP,EP)
+  gradeDF<-comDF(PP,ICTP,EP, mTV, mTP, mTK )
   
   val<-ifelse(gradeDF[gradeDF$Sklop=="Informacijska pismenost",3]=="Neopravljeno","C'mon, najprej opravite informacijsko pismenost, potem pa se bomo pogovarjali naprej!",NA)
   
@@ -45,7 +45,8 @@ ocenatxt<- function(PP,ICTP,EP)
   } else {
     
     points<-round(PP*0.5+ICTP*0.2+EP*0.3,0)
-    percentages<-round(points/(51.6)*100,0)
+    maxpoints=0.5*mTV+0.2*mTP+0.3*mTK
+    percentages<-round(points/(maxpoints)*100,0)
     
     ocena<-ifelse(percentages<60,5,
            ifelse(percentages<68,6,
@@ -53,7 +54,7 @@ ocenatxt<- function(PP,ICTP,EP)
            ifelse(percentages<85,8,
            ifelse(percentages<93,9,10)))))
     
-    val2<-paste("Skupaj ste dosegli ",as.character(points)," vseh tock, kar znasa ",
+    val2<-paste("Skupaj ste dosegli ",as.character(points)," vseh tock od ",as.character(maxpoints),", kar znasa ",
                 as.character(percentages)," odstotkov. Koncna ocena je tako ",
                 as.character(ocena), "!",sep="")
     
