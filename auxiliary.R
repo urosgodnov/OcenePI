@@ -45,7 +45,7 @@ ocenatxt<- function(PP,ICTP,EP,mTV, mTP, mTK)
   } else {
     
     points<-round(PP*0.5+ICTP*0.2+EP*0.3,0)
-    maxpoints=0.5*mTV+0.2*mTP+0.3*mTK
+    maxpoints=round(0.5*mTV+0.2*mTP+0.3*mTK,0)
     percentages<-round(points/(maxpoints)*100,0)
     
     ocena<-ifelse(percentages<60,5,
