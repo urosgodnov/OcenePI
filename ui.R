@@ -1,6 +1,6 @@
 library(shiny)
 library(shinydashboard)
-
+library(shinycssloaders)
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(#theme = "bootstrap.css",
                   
