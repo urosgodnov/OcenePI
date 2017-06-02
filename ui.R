@@ -43,8 +43,8 @@ shinyUI(fluidPage(#theme = "bootstrap.css",
         
         
         # Show values
-        mainPanel(withSpinner(tableOutput("values")),
-                  withSpinner(textOutput("ocena")))
+        mainPanel(tableOutput("values"),
+                  textOutput("ocena"))
         
       ),
       
