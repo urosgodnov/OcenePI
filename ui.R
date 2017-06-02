@@ -20,11 +20,11 @@ shinyUI(fluidPage(#theme = "bootstrap.css",
           helpText("Z drsnikom nastavite število točk v posamezni kategoriji!"),
           
 
-          uiOutput("TV"),
+          withSpinner(uiOutput("TV")),
           
-          uiOutput("TP"),
+          withSpinner(uiOutput("TP")),
           
-          uiOutput("TK"),
+          withSpinner(uiOutput("TK")),
           
           
           sliderInput(
@@ -43,8 +43,8 @@ shinyUI(fluidPage(#theme = "bootstrap.css",
         
         
         # Show values
-        mainPanel(tableOutput("values"),
-                  textOutput("ocena"))
+        mainPanel(withSpinner(tableOutput("values")),
+                  withSpinner(textOutput("ocena")))
         
       ),
       
@@ -120,7 +120,7 @@ shinyUI(fluidPage(#theme = "bootstrap.css",
           tabPanel("Grafi porazdelitve po letih in predmetih",
                    fluid = TRUE,
                    
-                   plotOutput('poletih')
+                   withSpinner(plotOutput('poletih'))
                    
            
                    
@@ -134,13 +134,13 @@ shinyUI(fluidPage(#theme = "bootstrap.css",
                    
                   mainPanel(  
                   h4("VS2005"),  
-                  tableOutput('tabelapoletihVS2005'),
+                  withSpinner(tableOutput('tabelapoletihVS2005')),
                   h4("VS2013"), 
-                  tableOutput('tabelapoletihVS2013'),
+                  withSpinner(tableOutput('tabelapoletihVS2013')),
                   h4("UN2005"), 
-                  tableOutput('tabelapoletihUN2005'),
+                  withSpinner(tableOutput('tabelapoletihUN2005')),
                   h4("UN2013"), 
-                  tableOutput('tabelapoletihUN2013')
+                  withSpinner(tableOutput('tabelapoletihUN2013'))
                    
                   )
                    

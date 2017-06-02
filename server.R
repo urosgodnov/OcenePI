@@ -4,6 +4,7 @@ library(dplyr)
 library(skimr)
 library(tidyr)
 library(rpivotTable)
+library(shinycssloaders)
 source("auxiliary.R")
 
 data<-read.csv(file="./data/PI.csv",sep=";")
