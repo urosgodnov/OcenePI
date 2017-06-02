@@ -1,6 +1,9 @@
 library(shiny)
 library(ggplot2)
 library(dplyr)
+library(skimr)
+library(tidyr)
+library(rpivotTable)
 source("auxiliary.R")
 
 data<-read.csv(file="./data/PI.csv",sep=";")
@@ -87,8 +90,78 @@ shinyServer(function(input, output, session) {
   })
   
   output$naslov <- renderText({
-    naslov=paste("Porazdelitev ocen v obdobju ",as.character(input$Obdobje[1])," in "
+    naslov=paste("Ocene v obdobju ",as.character(input$Obdobje[1])," in "
                  ,as.character(input$Obdobje[2]))
   })
   
+  
+  output$tabelavse <- renderTable({
+    
+    dff<-data%>%filter(between(Leto, input$Obdobje[1], input$Obdobje[2]))
+    
+    s<-(skim(dff))
+    
+    a<-s[s$var=="Ocena",c("stat","value")]
+    
+    colnames(a)[1:2]<-c("statistika", "vrednost")
+    
+    dfa<-a[c(4:7,10),]
+  })
+  
+  
+  output$poletih <- renderPlot({
+    
+    df<-data%>%filter(between(Leto, input$Obdobje[1], input$Obdobje[2]))
+    
+    ggplot(data=df,aes(x=Ocena))+facet_grid(Predmet~Leto)+
+      geom_bar(stat="bin")+ylab("Frekvenca")+theme(text = element_text(size=12))    
+  })
+  
+  output$tabelapoletihVS2005 <- renderTable({
+    
+    pogoji=c("n","mean","sd","min","median","max")
+    
+    dff<-data%>%filter(between(Leto, input$Obdobje[1], input$Obdobje[2]) & Predmet=="VS2005")%>%
+      group_by(Leto)%>%do(skim(.))%>%filter(var=="Ocena",stat %in% pogoji)%>%
+      select(Leto,stat,value)%>%spread(key=Leto,value=value)
+    
+  })
+  
+  output$tabelapoletihVS2013 <- renderTable({
+    
+    validate(
+      need(input$Obdobje[2] > 2012, 'Ce zelite prikazati statistiko programa VS2013, izberite ustrezno obdobje!')
+    )
+    
+    pogoji=c("n","mean","sd","min","median","max")
+    
+    dff<-data%>%filter(between(Leto, input$Obdobje[1], input$Obdobje[2]) & Predmet=="VS2013")%>%
+      group_by(Leto)%>%do(skim(.))%>%filter(var=="Ocena",stat %in% pogoji)%>%
+      select(Leto,stat,value)%>%spread(key=Leto,value=value)
+    
+  })
+  
+  output$tabelapoletihUN2005 <- renderTable({
+    
+    pogoji=c("n","mean","sd","min","median","max")
+    
+    dff<-data%>%filter(between(Leto, input$Obdobje[1], input$Obdobje[2]) & Predmet=="UN2005")%>%
+      group_by(Leto)%>%do(skim(.))%>%filter(var=="Ocena",stat %in% pogoji)%>%
+      select(Leto,stat,value)%>%spread(key=Leto,value=value)
+    
+  })
+  
+  output$tabelapoletihUN2013 <- renderTable({
+    
+    validate(
+      need(input$Obdobje[2] > 2012, 'Ce zelite prikazati statistiko programa UN2013, izberite ustrezno obdobje!')
+    )
+    
+    pogoji=c("n","mean","sd","min","median","max")
+    
+    dff<-data%>%filter(between(Leto, input$Obdobje[1], input$Obdobje[2]) & Predmet=="UN2013")%>%
+      group_by(Leto)%>%do(skim(.))%>%filter(var=="Ocena",stat %in% pogoji)%>%
+      select(Leto,stat,value)%>%spread(key=Leto,value=value)
+    
+  })
 })

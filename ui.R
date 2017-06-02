@@ -96,12 +96,63 @@ shinyUI(fluidPage(#theme = "bootstrap.css",
       
       hr(),
       
-      plotOutput('analiza')
+    #Tukaj dodam nov fluidrow, ki bo vsebovala tabsete  
+      fluidPage(
+      
+        tabsetPanel(
+          
+          tabPanel("Graf porazdelitve",
+            fluid = TRUE,
+        
+             plotOutput('analiza')
       
     
-      
+          ), #tabpanel grafporazdelitve
+          
+          tabPanel("Osnovna statistika za celoten niz podatkov",
+                   fluid = TRUE,
+                   
+                   tableOutput("tabelavse")
+          
+          
+          ), #Osnovna statistika za celoten niz podatkov
+          
+          tabPanel("Grafi porazdelitve po letih in predmetih",
+                   fluid = TRUE,
+                   
+                   plotOutput('poletih')
+                   
+           
+                   
+                   
+                   
+          ),  #grafpoletih
+           
+          tabPanel("Statistika po letih in predmetih",
+                   fluid = TRUE,
+                   
+                   
+                  mainPanel(  
+                  h4("VS2005"),  
+                  tableOutput('tabelapoletihVS2005'),
+                  h4("VS2013"), 
+                  tableOutput('tabelapoletihVS2013'),
+                  h4("UN2005"), 
+                  tableOutput('tabelapoletihUN2005'),
+                  h4("UN2013"), 
+                  tableOutput('tabelapoletihUN2013')
+                   
+                  )
+                   
+                   
+                   
+                   
+                   
+          )  #statistikapoletih
+                   
+        ) #tabsetpanel na statistiki ocen
 
-      
+      ) #FluidRow podseta
       
     ) #TabPanelStatistika ocen
     
