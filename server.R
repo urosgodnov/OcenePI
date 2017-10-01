@@ -7,17 +7,25 @@ library(rpivotTable)
 
 source("auxiliary.R")
 
+load("translation.bin") # contains the dictionary, parsed as a double list
+
+
+
 data<-read.csv(file="./data/PI.csv",sep=";")
 data<-data[,1:3]
 
 shinyServer(function(input, output, session) {
+  
+  tr <- function(text){ # translates text into current language
+    sapply(text,function(s) translation[[s]][[input$jezik]], USE.NAMES=FALSE)
+  }
   
   #Dynamic slider creation
   output$TV <- renderUI({
 
 
     sliderInput("TV",
-                 "Stevilo tock pri vajah",
+                 tr("Stevilo tock pri vajah"),
                  min = 0,
                  max = input$mTV,
                 value = 50
@@ -28,7 +36,7 @@ shinyServer(function(input, output, session) {
   output$TP <- renderUI({
     
     sliderInput("TP",
-                "Stevilo tock pri informacijski pismenosti",
+                tr("Stevilo tock pri informacijski pismenosti"),
                 min = 0,
                 max = input$mIP,
                 value = 10)
@@ -38,38 +46,42 @@ shinyServer(function(input, output, session) {
   output$TK <- renderUI({
     
     sliderInput("TK",
-                "Stevilo tock pri obeh kolokvijih",
+                tr("Stevilo tock pri obeh kolokvijih"),
                 min = 0,
                 max = input$mKO,
                 value = 20)
   })
   
-  observeEvent(input$animation, {
-    
-
-    value = sample(25:input$mTV, 1)
-    updateSliderInput(session, "TV", value = value)
-    
-    value = sample(5:input$mIP, 1)
-    updateSliderInput(session, "TP", value = value)
-    
-    value = sample(8:input$mKO, 1)
-    updateSliderInput(session, "TK", value = value)
-    
-  })
+  # observeEvent(input$animation, {
+  #   
+  # 
+  #   value = sample(25:input$mTV, 1)
+  #   updateSliderInput(session, "TV", value = value)
+  #   
+  #   value = sample(5:input$mIP, 1)
+  #   updateSliderInput(session, "TP", value = value)
+  #   
+  #   value = sample(8:input$mKO, 1)
+  #   updateSliderInput(session, "TK", value = value)
+  #   
+  # })
   
 
   
   sliderValues <- reactive({
     
+    if (input$jezik=="sl") {
       comDF(input$TV,input$TP,input$TK, input$mTV, input$mIP,input$mKO)
-    
+    } else {comDFang(input$TV,input$TP,input$TK, input$mTV, input$mIP,input$mKO)}
   }) 
   
   ocena <- reactive({
     
+    if (input$jezik=="sl") {
     ocenatxt(input$TV,input$TP,input$TK, input$mTV, input$mIP,input$mKO)
-    
+    } else {ocenatxtang(input$TV,input$TP,input$TK, input$mTV, input$mIP,input$mKO)}
+   
+
   }) 
   
   output$values <- renderTable({
